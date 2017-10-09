@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import java.util.Locale;
+
 public class DilutionActivity extends AppCompatActivity
 {
     @Override
@@ -27,39 +29,120 @@ public class DilutionActivity extends AppCompatActivity
             @Override
             public void onClick(View view)
             {
-                if(editTextM1.getText().equals(""))
+                if(editTextM1.getText().toString().equals(""))
                 {
-
+                    if(!(editTextV1.getText().toString().equals("") || editTextM2.getText().toString().equals("") || editTextV2.getText().toString().equals("")))
+                    {
+                        try
+                        {
+                            double v1 = Double.parseDouble(editTextV1.getText().toString());
+                            double m2 = Double.parseDouble(editTextM2.getText().toString());
+                            double v2 = Double.parseDouble(editTextV2.getText().toString());
+                            editTextM1.setText(String.format(Locale.US, "%5f", (m2 * v2 / v1)));
+                        }
+                        catch (Exception ex)
+                        {
+                            ex.printStackTrace();
+                            alertUser("Invalid Text!");
+                        }
+                    }
+                    else
+                    {
+                        alertUser("Not all of the other required entries were filled");
+                    }
                 }
-                else if(editTextV1.getText().equals(""))
+                else if(editTextV1.getText().toString().equals(""))
                 {
-
+                    if(!(editTextM1.getText().toString().equals("") || editTextM2.getText().toString().equals("") || editTextV2.getText().toString().equals("")))
+                    {
+                        try
+                        {
+                            double m1 = Double.parseDouble(editTextM1.getText().toString());
+                            double m2 = Double.parseDouble(editTextM2.getText().toString());
+                            double v2 = Double.parseDouble(editTextV2.getText().toString());
+                            editTextV1.setText(String.format(Locale.US, "%5f", (m2 * v2 / m1)));
+                        }
+                        catch(Exception ex)
+                        {
+                            ex.printStackTrace();
+                            alertUser("Invalid Text!");
+                        }
+                    }
+                    else
+                    {
+                        alertUser("Not all of the other required entries were filled");
+                    }
                 }
-                else if(editTextM2.getText().equals(""))
+                else if(editTextM2.getText().toString().equals(""))
                 {
-
+                    if(!(editTextM1.getText().toString().equals("") || editTextV1.getText().toString().equals("") || editTextV2.getText().toString().equals("")))
+                    {
+                        try
+                        {
+                            double v1 = Double.parseDouble(editTextV1.getText().toString());
+                            double m1 = Double.parseDouble(editTextM1.getText().toString());
+                            double v2 = Double.parseDouble(editTextV2.getText().toString());
+                            editTextM2.setText(String.format(Locale.US, "%5f", (m1 * v1 / v2)));
+                        }
+                        catch (Exception ex)
+                        {
+                            ex.printStackTrace();
+                            alertUser("Invalid Text!");
+                        }
+                    }
+                    else
+                    {
+                        alertUser("Not all of the other required entries were filled");
+                    }
                 }
-                else if(editTextV2.getText().equals(""))
+                else if(editTextV2.getText().toString().equals(""))
                 {
-
+                    if(!(editTextM1.getText().toString().equals("") || editTextV1.getText().toString().equals("") || editTextM2.getText().toString().equals("")))
+                    {
+                        try
+                        {
+                            double v1 = Double.parseDouble(editTextV1.getText().toString());
+                            double m1 = Double.parseDouble(editTextM1.getText().toString());
+                            double m2 = Double.parseDouble(editTextM2.getText().toString());
+                            editTextV2.setText(String.format(Locale.US, "%5f", (m1 * v1 / m2)));
+                        }
+                        catch (Exception ex)
+                        {
+                            ex.printStackTrace();
+                            alertUser("Invalid Text!");
+                        }
+                    }
+                    else
+                    {
+                        alertUser("Not all of the other required entries were filled");
+                    }
                 }
                 else
                 {
-                    //https://stackoverflow.com/questions/26097513/android-simple-alert-dialog
-                    AlertDialog alertDialog = new AlertDialog.Builder(getApplicationContext()).create();
-                    alertDialog.setTitle("Error");
-                    alertDialog.setMessage("All Entries Were Detected to Be Filled");
-                    alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
-                            new DialogInterface.OnClickListener()
-                            {
-                                public void onClick(DialogInterface dialog, int which)
-                                {
-                                    dialog.dismiss();
-                                }
-                            });
-                    alertDialog.show();
+                    alertUser("All of the User Entries Were Detected to Be Filled");
                 }
             }
         });
+    }
+
+    /**
+     *
+     * @param message
+     * @see "https://stackoverflow.com/questions/26097513/android-simple-alert-dialog"
+     */
+    private void alertUser(String message)
+    {
+        AlertDialog alertDialog = new AlertDialog.Builder(DilutionActivity.this).create();
+        alertDialog.setTitle("Error");
+        alertDialog.setMessage(message);
+        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                new DialogInterface.OnClickListener()
+                {
+                    public void onClick(DialogInterface dialog, int which)
+                    {
+                        dialog.dismiss();
+                    }
+                });
+        alertDialog.show();
     }
 }
