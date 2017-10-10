@@ -14,13 +14,14 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity
 {
-    private enum TOOL_ACTIVITIES {DILUTION_ACTIVITY}
+    private enum TOOL_ACTIVITIES {DILUTION_ACTIVITY, TITRATION_ACTIVITY}
     private static ArrayList<TOOL_ACTIVITIES> TOOL_LIST = new ArrayList<>();
 
     static
     {
         System.loadLibrary("native-lib");
         TOOL_LIST.add(TOOL_ACTIVITIES.DILUTION_ACTIVITY);
+        TOOL_LIST.add(TOOL_ACTIVITIES.TITRATION_ACTIVITY);
     }
 
     @Override
@@ -43,9 +44,10 @@ public class MainActivity extends AppCompatActivity
                 switch((TOOL_ACTIVITIES) adapterView.getItemAtPosition(i))
                 {
                     case DILUTION_ACTIVITY:
-                        Intent intent = new Intent(getApplicationContext(), DilutionActivity.class);
-                        startActivity(intent);
+                        startActivity(new Intent(getApplicationContext(), DilutionActivity.class));
                         break;
+                    case TITRATION_ACTIVITY:
+                        startActivity(new Intent(getApplicationContext(), TitrationActivity.class));
                     default:
                         Log.d("MainActivity", "Default Click");
                         break;

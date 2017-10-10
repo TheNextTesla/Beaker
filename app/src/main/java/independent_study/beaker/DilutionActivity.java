@@ -126,8 +126,8 @@ public class DilutionActivity extends AppCompatActivity
     }
 
     /**
-     *
-     * @param message
+     * Generates Pop-Up Dialogues
+     * @param message - Message to be Appears as a "Pop-up" to the User
      * @see "https://stackoverflow.com/questions/26097513/android-simple-alert-dialog"
      */
     private void alertUser(String message)
