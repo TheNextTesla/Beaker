@@ -1,4 +1,19 @@
 <resources>
     <string name="app_name">Beaker</string>
     <string name="main_activity_title">Tools List</string>
+    <string name="titration_activity_title">Titration</string>
+    <string name="titration_activity_curve">Example Titration Curve</string>
+    <string name="titration_activity_radio_button_before">Before Equilibrium</string>
+    <string name="titration_activity_radio_button_equivalence">Equilibrium</string>
+    <string name="titration_activity_radio_button_after">After Equilibrium</string>
+    <string name="titration_activity_kp_t_hint">A/B Constant Titrant</string>
+    <string name="titration_activity_ml_t_hint">mL of Titrant Added</string>
+    <string name="titration_activity_m_t_hint">M of Titrant Added</string>
+    <string name="titration_activity_ph_hint">pH of Solution</string>
+    <string name="titration_activity_kpa_off">KPA</string>
+    <string name="titration_activity_kpb_on">KPB</string>
+    <string name="titration_activity_kp_o_hint">A/B Constant Original</string>
+    <string name="titration_activity_ml_o_hint">mL of Original</string>
+    <string name="titration_activity_m_o_hint">pH of Original</string>
+    <string name="titration_activity_finalize">Complete</string>
 </resources>

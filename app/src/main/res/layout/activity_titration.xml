@@ -1,79 +1,243 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="independent_study.beaker.TitrationActivity">
+<!-- https://stackoverflow.com/questions/3819189/how-to-make-my-layout-able-to-scroll-down -->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="0dp"
-        android:layout_height="193dp"
-        app:layout_constraintRight_toRightOf="parent"
-        app:srcCompat="@drawable/ic_titration"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="43dp"
-        app:layout_constraintLeft_toRightOf="@+id/radioGroup"
-        android:layout_marginLeft="8dp"
-        android:layout_marginStart="8dp"
-        app:layout_constraintHorizontal_bias="1.0" />
+    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context="independent_study.beaker.TitrationActivity">
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="31dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="8dp"
-        android:text="TextView"
-        android:textSize="30sp"
-        app:layout_constraintHorizontal_bias="0.502"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <!-- https://stackoverflow.com/questions/37508968/fidelity-warning-rendering-issue -->
+        <!-- https://developer.android.com/studio/write/vector-asset-studio.html#svg -->
 
-    <RadioGroup
-        android:id="@+id/radioGroup"
-        android:layout_width="132dp"
-        android:layout_height="124dp"
-        android:layout_marginLeft="-21dp"
-        android:layout_marginStart="-21dp"
-        android:layout_marginTop="78dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="0dp"
+            android:layout_height="193dp"
+            android:contentDescription="@string/titration_activity_curve"
+            app:layout_constraintRight_toRightOf="parent"
+            app:srcCompat="@drawable/ic_titration"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="48dp"
+            app:layout_constraintLeft_toRightOf="@+id/radioGroup"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
+            app:layout_constraintHorizontal_bias="0.0" />
 
-        <RadioButton
-            android:id="@+id/radioButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
-            android:layout_marginStart="16dp"
-            android:text="Before Equilibrium"
-            app:layout_constraintLeft_toLeftOf="parent"
-            tools:layout_editor_absoluteY="100dp" />
-
-        <RadioButton
-            android:id="@+id/radioButton2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
-            android:layout_marginStart="16dp"
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="321dp"
+            android:layout_height="35dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
             android:layout_marginTop="8dp"
-            android:text="Equilibrium"
+            android:text="@string/titration_activity_title"
+            android:textAlignment="center"
+            android:textSize="30sp"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/radioButton" />
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <RadioButton
-            android:id="@+id/radioButton3"
+        <!-- https://developer.android.com/guide/topics/ui/controls/radiobutton.html -->
+
+        <RadioGroup
+            android:id="@+id/radioGroup"
+            android:layout_width="132dp"
+            android:layout_height="124dp"
+            android:layout_marginLeft="-21dp"
+            android:layout_marginStart="-21dp"
+            android:layout_marginTop="78dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <RadioButton
+                android:id="@+id/radioButtonBefore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"
+                android:text="@string/titration_activity_radio_button_before"
+                app:layout_constraintLeft_toLeftOf="parent"
+                tools:layout_editor_absoluteY="100dp" />
+
+            <RadioButton
+                android:id="@+id/radioButtonEquiv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/titration_activity_radio_button_equivalence"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/radioButton" />
+
+            <RadioButton
+                android:id="@+id/radioButtonAfter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/titration_activity_radio_button_after"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/radioButton2" />
+        </RadioGroup>
+
+        <!-- https://stackoverflow.com/questions/8673347/change-the-on-off-text-of-a-toggle-button-android -->
+
+        <EditText
+            android:id="@+id/editTextKP_T"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:ems="10"
+            android:hint="@string/titration_activity_kp_t_hint"
+            android:inputType="numberDecimal"
+            android:textAlignment="center"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+        <EditText
+            android:id="@+id/editTextML_T"
+            android:layout_width="181dp"
+            android:layout_height="44dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:ems="10"
+            android:hint="@string/titration_activity_ml_t_hint"
+            android:inputType="numberDecimal"
+            android:textAlignment="center"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextKP_T" />
+
+        <EditText
+            android:id="@+id/editTextPH"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:text="After Equilibrium"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
+            android:ems="10"
+            android:hint="@string/titration_activity_ph_hint"
+            android:inputType="numberDecimal"
+            android:textAlignment="center"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/radioButton2" />
-    </RadioGroup>
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/editTextML_O"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="8dp" />
 
-</android.support.constraint.ConstraintLayout>
+        <EditText
+            android:id="@+id/editTextMO_T"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="8dp"
+            android:ems="10"
+            android:hint="@string/titration_activity_m_t_hint"
+            android:inputType="numberDecimal"
+            android:textAlignment="center"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintLeft_toRightOf="@+id/editTextML_T"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextKP_T" />
+
+        <!-- https://stackoverflow.com/questions/8673347/change-the-on-off-text-of-a-toggle-button-android -->
+
+        <ToggleButton
+            android:id="@+id/toggleButton_T"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textOff="@string/titration_activity_kpa_off"
+            android:textOn="@string/titration_activity_kpb_on"
+            android:layout_marginRight="8dp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/editTextKP_T"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/imageView"
+            app:layout_constraintHorizontal_bias="0.483" />
+
+        <Button
+            android:id="@+id/buttonFinalize"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/titration_activity_finalize"
+            app:layout_constraintLeft_toRightOf="@+id/editTextPH"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintHorizontal_bias="0.53"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/editTextMO_O"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="8dp" />
+
+        <EditText
+            android:id="@+id/editTextKP_O"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:ems="10"
+            android:inputType="numberDecimal"
+            android:textAlignment="center"
+            android:hint="@string/titration_activity_kp_o_hint"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextML_T" />
+
+        <ToggleButton
+            android:id="@+id/toggleButton_O"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7dp"
+            android:textOff="@string/titration_activity_kpa_off"
+            android:textOn="@string/titration_activity_kpb_on"
+            app:layout_constraintTop_toBottomOf="@+id/editTextMO_T"
+            android:layout_marginRight="8dp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/editTextKP_O"
+            android:layout_marginLeft="8dp"
+            app:layout_constraintHorizontal_bias="0.49" />
+
+        <EditText
+            android:id="@+id/editTextML_O"
+            android:layout_width="181dp"
+            android:layout_height="44dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:ems="10"
+            android:inputType="numberDecimal"
+            android:textAlignment="center"
+            android:hint="@string/titration_activity_ml_o_hint"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextKP_O" />
+
+        <EditText
+            android:id="@+id/editTextMO_O"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="6dp"
+            android:ems="10"
+            android:hint="@string/titration_activity_m_o_hint"
+            android:inputType="numberDecimal"
+            android:textAlignment="center"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintLeft_toRightOf="@+id/editTextML_O"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toggleButton_O" />
+
+    </android.support.constraint.ConstraintLayout>
+</ScrollView>
+
