@@ -35,6 +35,8 @@ public class MainActivity extends AppCompatActivity
 
         ArrayAdapter<TOOL_ACTIVITIES> arrayAdapter = new ArrayAdapter<>(this, R.layout.list_text_view, TOOL_LIST);
         listView.setAdapter(arrayAdapter);
+
+        //https://developer.android.com/reference/android/widget/AdapterView.OnItemClickListener.html
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {
             @Override
