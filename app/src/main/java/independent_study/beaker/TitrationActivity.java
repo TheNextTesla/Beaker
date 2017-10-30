@@ -198,6 +198,7 @@ public class TitrationActivity extends AppCompatActivity
                 Log.d("TitrationActivity", "KPA " + kpa);
                 return (isKPA ? kpa : (CONSTANT_OF_WATER_25C / kpa));
             }
+            //TODO: Change After Equilibrium Math
             else if(ct == CALCULATION_TYPE.AFTER)
             {
                 //Theoretical Concentration of Moles of Titrant Remaining
@@ -207,24 +208,103 @@ public class TitrationActivity extends AppCompatActivity
 
                 double kpa = -(mo_h * mo_h) / (mo_s_un - mo_h);
                 Log.d("TitrationActivity", "KPA " + kpa);
-                return (kpa);
+                return (isKPA ? kpa : (CONSTANT_OF_WATER_25C / kpa));
             }
         }
         else if(Double.isNaN(ml_t))
         {
+            //Moles of Original
+            double moles_o = mo_o * (ml_o / 1000);
 
+            if(ct == CALCULATION_TYPE.BEFORE)
+            {
+                //Equilibrium Concentration of Hydrogen
+                double mo_h_eq = (-kp + Math.sqrt((kp * kp) + 4 * (kp * mo_o))) / 2;
+                //Equilibrium pH
+                double ph_eq = Math.log10(mo_h_eq);
+
+                //Ratio Between Conjugates
+                double mo_ratio_a_ha = Math.pow(10, ph - ph_eq);
+                //Gets Moles of T From Moles of Original
+                double moles_t = (mo_ratio_a_ha * moles_o) + moles_o;
+
+                return (moles_t / mo_t);
+            }
+            else if(ct == CALCULATION_TYPE.EQUIV)
+            {
+                //Simple Dilution Math At Equivalence Point
+                return ((moles_o / mo_t) * 1000);
+            }
+            else if(ct == CALCULATION_TYPE.AFTER)
+            {
+
+            }
         }
         else if(Double.isNaN(mo_t))
         {
+            if(ct == CALCULATION_TYPE.BEFORE)
+            {
 
+            }
+            else if(ct == CALCULATION_TYPE.EQUIV)
+            {
+                //Moles of Original
+                double moles_o = mo_o * (ml_o / 1000);
+
+                //Simple Dilution Math At Equivalence Point
+                return ((moles_o / (ml_t / 1000)));
+            }
+            else if(ct == CALCULATION_TYPE.AFTER)
+            {
+
+            }
         }
         else if(Double.isNaN(ml_o))
         {
+            double moles_t = mo_t * (ml_t / 1000);
 
+            if(ct == CALCULATION_TYPE.BEFORE)
+            {
+                //Equilibrium Concentration of Hydrogen
+                double mo_h_eq = (-kp + Math.sqrt((kp * kp) + 4 * (kp * mo_t))) / 2;
+                //Equilibrium pH
+                double ph_eq = Math.log10(mo_h_eq);
+
+                //Ratio Between Conjugates
+                double mt_ratio_a_ha = Math.pow(10, ph - ph_eq);
+                //Gets Moles of T From Moles of Original
+                double moles_o = (mt_ratio_a_ha * moles_t) + moles_t;
+
+                return (moles_o / mo_o);
+            }
+            else if(ct == CALCULATION_TYPE.EQUIV)
+            {
+                //Simple Dilution Math
+                return (moles_t / (ml_o / 1000));
+            }
+            else if(ct == CALCULATION_TYPE.AFTER)
+            {
+
+            }
         }
         else if(Double.isNaN(mo_o))
         {
+            if(ct == CALCULATION_TYPE.BEFORE)
+            {
 
+            }
+            else if(ct == CALCULATION_TYPE.EQUIV)
+            {
+                //Moles of Titrant Substance
+                double moles_t = mo_t * (ml_t / 1000);
+
+                //Simple Dilution Math
+                return ((moles_t / mo_o) * 1000);
+            }
+            else if(ct == CALCULATION_TYPE.AFTER)
+            {
+
+            }
         }
         else if(Double.isNaN(ph))
         {
@@ -234,28 +314,23 @@ public class TitrationActivity extends AppCompatActivity
 
             if(ct == CALCULATION_TYPE.BEFORE)
             {
-                /*
-                //Theoretical Concentration of Moles of Original Remaining
-                double mo_s_un = ((moles_o - moles_t) / (ml_o + ml_t) / 1000);
-
-                //Molarity of Hydrogen
                 //https://chem.libretexts.org/Core/Analytical_Chemistry/Lab_Techniques/Titration/Titration_of_a_Weak_Base_with_a_Strong_Acid
-                double mo_h = (mo_s_un + Math.sqrt(Math.pow(mo_s_un, 2) - 4 * (-1) * (mo_s_un / ))) / (2 * -1);
-
-                double ph_real = Math.log10(-mo_h);
-                */
-
+                //https://www.thoughtco.com/calculating-ph-of-a-weak-acid-problem-609589
+                //Calculates the Balanced Concentration of Hydrogen
                 double mo_h_eq = (-kp + Math.sqrt((kp * kp) + 4 * (kp * mo_o))) / 2;
-
-                Log.d("TitrationActivity", "MO_H_EQ " + mo_h_eq);
-
                 double ph_eq = Math.log10(mo_h_eq);
 
-                Log.d("TitrationActivity", "PH " + ph_eq);
-                return (ph_eq);
-            }
+                //Concentration Changes (Since this is NOT equivalence)
+                double mo_o_un = (Math.abs(moles_o - moles_t) / (ml_o + ml_t) / 1000);
+                double mo_t_un = (moles_o) / (ml_o + ml_t) / 1000;
+                double ph_current = ph_eq + Math.log10(mo_t_un / Math.abs(mo_t_un - mo_o_un));
 
-            if(ct == CALCULATION_TYPE.EQUIV)
+                Log.d("TitrationActivity", "MO_T " + mo_t_un);
+                Log.d("TitrationActivity", "MO_O " + mo_o_un);
+                Log.d("TitrationActivity", "PH " + ph_current);
+                return (ph_current);
+            }
+            else if(ct == CALCULATION_TYPE.EQUIV)
             {
                 //Molarity of Hydrogen = kp @ Equilibrium Point
                 double mo_h = kp;
@@ -264,12 +339,10 @@ public class TitrationActivity extends AppCompatActivity
                 Log.d("TitrationActivity", "PH " + ph_real);
                 return (ph_real);
             }
-
-            if(ct == CALCULATION_TYPE.AFTER)
+            else if(ct == CALCULATION_TYPE.AFTER)
             {
                 //Theoretical Concentration of Moles of Titrant Remaining
                 double mo_s_un = ((moles_t - moles_o) / (ml_o + ml_t) / 1000);
-
                 //Molarity of Hydrogen
                 double mo_h = (Math.pow(10, -ph));
 
